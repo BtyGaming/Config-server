@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: Gateway # Nombre de la aplicación del API Gateway
+  cloud:
+    gateway:
+      routes:
+        # Ruta para el microservicio de Productos (en el mismo Product Server)
+        - id: product-service
+          uri: lb://PRODUCT-SERVER  # Usando Eureka para balanceo de carga
+          predicates:
+            - Path=/api/products/**  # Ruta para productosw
+        - id: suplier-sever
+          uri: lb://SUPLIER-SEVER  # Usa el nombre del servicio registrado en Eureka
+          predicates:
+            - Path=/api/suppliers/**
+
+          # Ruta para el microservicio de Categorías (en el mismo Product Server)
+        - id: category-service
+          uri: lb://PRODUCT-SERVER  # Usando Eureka para balanceo de carga
+          predicates:
+            - Path=/api/categories/**  # Ruta para categorías
+
+  eureka:
+    client:
+      service-url:
+        defaultZone: http://localhost:8761/eureka  # Dirección de Eureka Server
+
+server:
+  port: 8080  # Puerto en el que estará el API Gateway
+
