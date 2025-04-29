@@ -1,0 +1,26 @@
+name: Config Server CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'Config-server/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./Config-server
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest
