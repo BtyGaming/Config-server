@@ -24,3 +24,5 @@ jobs:
         context: ./Config-server
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest
+
+        
