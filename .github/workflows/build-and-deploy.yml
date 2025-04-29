@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'Config-server/**'
+      - '**'
 
 jobs:
   build:
@@ -21,6 +21,6 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: ./Config-server
+        context: .
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/config-server:latest
